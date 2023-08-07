@@ -1,7 +1,7 @@
 import socket
 
 r=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-r.connect(('localhost',7000))
+r.connect(('192.168.93.164',7000))
 while True:
     msg1=input("Enter message : ")
     r.send(msg1.encode())

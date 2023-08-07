@@ -1,24 +1,30 @@
 import socket
+import time
 
 s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 s.bind(('localhost',7000))
 print('socket created')
 ack=0
 i=1
-messages=['']
+fno=''
 while True:
     msg,addr=s.recvfrom(1024)
-    print('Received Message: ', msg.decode())
-    if msg.decode()!=messages[-1]:
-        messages.append(msg.decode())
-    else:
-        print('Duplicate message')
+    msg=msg.decode()
+    msg,fno=msg[:-1],msg[-1]
+    print('Received Message: ', msg)
     s.connect(addr)
-    ack=(ack+1)%2 
+    ack=(ack+1)%2
     i+=1
-    if i!=2:
+    if i==2:
+        time.sleep(1.1)
+
+    if ack==(fno):
+        s.send(str(ack).encode())
+    else:
+        print('duplicate frame')
+
         s.send(str(ack).encode())
     print('Acknowledgement Sent')
-    if msg.decode()=='$':
+    if msg=='$':
         print('Transmission End')
         break

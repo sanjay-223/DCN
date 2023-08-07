@@ -7,7 +7,7 @@ print('connection established')
 
 msg1,addr=s.recvfrom(1024)
 
-if(msg1.decode()=='date'):
+if('date' in msg1.decode()):
     s.connect(addr)
     curr=datetime.datetime.now()
     msg=str(curr)

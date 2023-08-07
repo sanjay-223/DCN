@@ -9,10 +9,12 @@ def recvack(sock):
 
 r=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 r.connect(('localhost',7000))
-
+i=1
 messages=['Hello','World','$']
 for msg in messages:
-    r.send(msg.encode())
+    if i!=2:
+        r.send(msg.encode())
+    i+=1
     print('Message Sent')
     ack=recvack(r)
  
